@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import './screens/product_detail_screen.dart';
+import './screens/product_overview_screen.dart';
+import './provider/products.dart';
 
 void main() {
   runApp(MyApp());
@@ -7,11 +12,18 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        title: Text('World Mart'),
+    return ChangeNotifierProvider(
+      create: (context) => Products(),
+          child: MaterialApp(
+        theme: ThemeData(
+            primarySwatch: Colors.purple,
+            accentColor: Colors.deepOrange,
+            fontFamily: 'Lato'),
+        home: ProductOverviewScreen(),
+        routes: {
+          ProductDetailScreen.namedroute: (context) => ProductDetailScreen()
+        },
       ),
-    ));
+    );
   }
 }
