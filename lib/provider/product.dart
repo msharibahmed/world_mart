@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 
-class Product {
+class Product extends ChangeNotifier {
   final String id;
   final String imageUrl;
   final String title;
-  final bool isFavorite;
+  bool isFavorite;
   final double price;
   final description;
 
@@ -15,4 +15,9 @@ class Product {
       @required this.description,
       this.isFavorite = false,
       @required this.price});
+  void onFavoriteTap() {
+    isFavorite = !isFavorite;
+    notifyListeners();
+    print(isFavorite);
+  }
 }

@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/products.dart';
 
 class ProductDetail extends StatelessWidget {
-  final String imageUrl;
-  final String id;
-  final String description;
-  final String title;
-  final double price;
-  final bool isFavorite;
+  final String productId;
 
-  ProductDetail(
-      {this.id,
-      this.title,
-      this.description,
-      this.imageUrl,
-      this.price,
-      this.isFavorite});
+  ProductDetail(this.productId);
   @override
   Widget build(BuildContext context) {
+    final products = Provider.of<Products>(context);
+    final productsData = products.findById(productId);
     return Column(
-      children: [Image.network(imageUrl,fit: BoxFit.cover,)],
+      children: [
+        Image.network(
+          productsData.imageUrl,
+          fit: BoxFit.cover,
+        ),
+      ],
     );
   }
 }
