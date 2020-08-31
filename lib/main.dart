@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import './screens/product_detail_screen.dart';
 import './screens/product_overview_screen.dart';
 import './provider/products.dart';
+import './provider/cart.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,18 +13,20 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => Products(),
-          child: MaterialApp(
-        theme: ThemeData(
-            primarySwatch: Colors.purple,
-            accentColor: Colors.deepOrange,
-            fontFamily: 'Lato'),
-        home: ProductOverviewScreen(),
-        routes: {
-          ProductDetailScreen.namedroute: (context) => ProductDetailScreen()
-        },
-      ),
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => Products()),
+          ChangeNotifierProvider(create: (context) => Cart()),
+        ],
+        child: MaterialApp(
+          theme: ThemeData(
+              primarySwatch: Colors.purple,
+              accentColor: Colors.deepOrange,
+              fontFamily: 'Lato'),
+          home: ProductOverviewScreen(),
+          routes: {
+            ProductDetailScreen.namedroute: (context) => ProductDetailScreen()
+          },
+        ));
   }
 }
