@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../screens/product_detail_screen.dart';
 import '../provider/product.dart';
+import '../provider/cart.dart';
 
 class ProductItem extends StatelessWidget {
   // final String imageUrl;
@@ -11,7 +12,8 @@ class ProductItem extends StatelessWidget {
   // ProductItem(this.id, this.title, this.imageUrl);
   @override
   Widget build(BuildContext context) {
-    final productData = Provider.of<Product>(context,listen: false);
+    final productData = Provider.of<Product>(context, listen: false);
+    final cart = Provider.of<Cart>(context,listen:false);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(5.0),
@@ -24,15 +26,14 @@ class ProductItem extends StatelessWidget {
               child: Image.network(productData.imageUrl, fit: BoxFit.cover)),
           footer: GridTileBar(
             leading: Consumer<Product>(
-              builder:(context,product,_)=>IconButton(
-                icon: Icon(
-                  productData.isFavorite
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color: Colors.red,
-                ),
-                onPressed: productData.onFavoriteTap)
-            ),
+                builder: (context, product, _) => IconButton(
+                    icon: Icon(
+                      productData.isFavorite
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: Colors.red,
+                    ),
+                    onPressed: productData.onFavoriteTap)),
             backgroundColor: Colors.black87,
             title: Text(
               productData.title,
@@ -43,7 +44,11 @@ class ProductItem extends StatelessWidget {
                   Icons.add_shopping_cart,
                   color: Colors.amber,
                 ),
-                onPressed: () {}),
+                onPressed: () {
+                  cart.addItem(productData.id, productData.title, productData.price);
+                      print(cart.itemCount);
+
+                }),
           )),
     );
   }

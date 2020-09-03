@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/cart_screen.dart';
 import '../widgets/products_grid.dart';
+import '../widgets/badge.dart';
+import '../provider/cart.dart';
 
 enum FilterOptions { Favorites, ShowAll }
 
@@ -19,12 +22,25 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
         appBar: AppBar(
           title: Text('World Mart'),
           actions: [
-            IconButton(
-                icon: Icon(Icons.shopping_cart),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => CartScreen()));
-                }),
+            // IconButton(
+            //     icon: Icon(Icons.shopping_cart),
+            //     onPressed: () {
+            //       Navigator.push(context,
+            //           MaterialPageRoute(builder: (context) => CartScreen()));
+            //     }),
+            Consumer<Cart>(
+                builder: (context, cart, ch) => Badge(
+                      value: cart.itemCount.toString(),
+                      child: ch,
+                    ),
+                child: IconButton(
+                    icon: Icon(Icons.shopping_cart),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CartScreen()));
+                    })),
             PopupMenuButton(
               onSelected: (FilterOptions value) {
                 setState(() {
