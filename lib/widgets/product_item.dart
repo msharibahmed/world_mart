@@ -33,7 +33,18 @@ class ProductItem extends StatelessWidget {
                           : Icons.favorite_border,
                       color: Colors.red,
                     ),
-                    onPressed: productData.onFavoriteTap)),
+                    onPressed: () {
+                      productData.onFavoriteTap();
+                       final snackBar = SnackBar(
+                      backgroundColor: Colors.deepOrange[100],
+                      elevation: 10,
+                      content: Text( productData.isFavorite?'Added To Favorites!':'Removed From Favorites!',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold)));
+                  Scaffold.of(context).showSnackBar(snackBar);
+
+                    })),
             backgroundColor: Colors.black87,
             title: Text(
               productData.title,
@@ -46,8 +57,16 @@ class ProductItem extends StatelessWidget {
                 ),
                 onPressed: () {
                   cart.addItem(productData.id, productData.title,
-  productData.price, productData.imageUrl);
+                      productData.price, productData.imageUrl);
                   print(cart.itemCount);
+                  final snackBar = SnackBar(
+                      backgroundColor: Colors.deepOrange[100],
+                      elevation: 10,
+                      content: Text('Added To Cart!',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold)));
+                  Scaffold.of(context).showSnackBar(snackBar);
                 }),
           )),
     );
