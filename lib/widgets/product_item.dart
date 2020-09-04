@@ -13,7 +13,7 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productData = Provider.of<Product>(context, listen: false);
-    final cart = Provider.of<Cart>(context,listen:false);
+    final cart = Provider.of<Cart>(context, listen: false);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(5.0),
@@ -45,9 +45,9 @@ class ProductItem extends StatelessWidget {
                   color: Colors.amber,
                 ),
                 onPressed: () {
-                  cart.addItem(productData.id, productData.title, productData.price);
-                      print(cart.itemCount);
-
+                  cart.addItem(productData.id, productData.title,
+  productData.price, productData.imageUrl);
+                  print(cart.itemCount);
                 }),
           )),
     );

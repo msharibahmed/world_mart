@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           theme: ThemeData(
-              primarySwatch: Colors.purple,
-              accentColor: Colors.deepOrange,
+              primarySwatch: Colors.deepOrange,
+              accentColor: Colors.orange,
               fontFamily: 'Lato'),
           home: ProductOverviewScreen(),
           routes: {
