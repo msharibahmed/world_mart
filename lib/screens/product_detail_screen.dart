@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../widgets/product_detail.dart';
 import '../provider/products.dart';
+import '../provider/cart.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   static const namedroute = 'product-detail-screen';
@@ -10,13 +11,31 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productId = ModalRoute.of(context).settings.arguments as String;
-    final products = Provider.of<Products>(context,listen: false);
+    final products = Provider.of<Products>(context, listen: false);
+    final cart = Provider.of<Cart>(context, listen: false);
     final productsData = products.findById(productId);
     return Scaffold(
-      floatingActionButton: FloatingActionButton(backgroundColor: Colors.amber,
-          onPressed: () {}, child: Icon(Icons.add_shopping_cart,color:Colors.black)),
+      floatingActionButton: Builder(
+          builder: (BuildContext ctx) => FloatingActionButton(
+              backgroundColor: Colors.amber,
+              onPressed: () {
+                cart.addItem(productId, productsData.title, productsData.price,
+                    productsData.imageUrl);
+                displaySnackBar(ctx);
+              },
+              child: Icon(Icons.add_shopping_cart, color: Colors.black))),
       appBar: AppBar(title: Text(productsData.title)),
       body: ProductDetail(productId),
     );
   }
+}
+
+displaySnackBar(BuildContext ctx) {
+  final snackBar = SnackBar(
+      duration: Duration(seconds: 1),
+      backgroundColor: Colors.deepOrange[100],
+      elevation: 10,
+      content: Text('Added To Cart!',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)));
+  Scaffold.of(ctx).showSnackBar(snackBar);
 }

@@ -16,6 +16,7 @@ class ProductDetail extends StatelessWidget {
         Image.network(
           productsData.imageUrl,
           fit: BoxFit.cover,
+          
         ),
       ],
     );

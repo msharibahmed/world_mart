@@ -36,7 +36,13 @@ class CartItem extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                      Text('\$ ' + cartData.price.toString() + '/Piece'),
+                      RichText(
+                          text: TextSpan(text: '\$ ',style: TextStyle(color: Colors.green),children: [
+                        
+                        TextSpan(text:cartData.price.toString(),style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold)),
+                        TextSpan(text:'/Piece',style: TextStyle(color: Colors.black)),
+                      ])),
+                      
                     ],
                   ),
                 ),
@@ -57,26 +63,30 @@ class CartItem extends StatelessWidget {
                     style: TextStyle(fontSize: 20)),
               ),
               Spacer(),
-             Consumer<Cart>(builder: (context,cart,_)=> IconButton(
-                  icon: Icon(
-                    Icons.indeterminate_check_box,
-                    color: Colors.deepOrangeAccent[100],
-                    size: 35,
-                  ),
-                  onPressed: () {
-                    cart.decrement(cart.items.keys.toList()[index],index);
-                  }),),
+              Consumer<Cart>(
+                builder: (context, cart, _) => IconButton(
+                    icon: Icon(
+                      Icons.indeterminate_check_box,
+                      color: Colors.deepOrangeAccent[100],
+                      size: 35,
+                    ),
+                    onPressed: () {
+                      cart.decrement(cart.items.keys.toList()[index], index);
+                    }),
+              ),
               Text(cartData.quantity.toString(),
                   style: TextStyle(fontSize: 20)),
-              Consumer<Cart>(builder: (context,cart,_)=> IconButton(
-                  icon: Icon(
-                    Icons.add_box,
-                    color: Colors.deepOrange,
-                    size: 35,
-                  ),
-                  onPressed: () {
-                    cart.increment(cart.items.keys.toList()[index]);
-                  }),),
+              Consumer<Cart>(
+                builder: (context, cart, _) => IconButton(
+                    icon: Icon(
+                      Icons.add_box,
+                      color: Colors.deepOrange,
+                      size: 35,
+                    ),
+                    onPressed: () {
+                      cart.increment(cart.items.keys.toList()[index]);
+                    }),
+              ),
             ],
           )
         ],
