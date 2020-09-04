@@ -22,12 +22,6 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
         appBar: AppBar(
           title: Text('World Mart'),
           actions: [
-            // IconButton(
-            //     icon: Icon(Icons.shopping_cart),
-            //     onPressed: () {
-            //       Navigator.push(context,
-            //           MaterialPageRoute(builder: (context) => CartScreen()));
-            //     }),
             Consumer<Cart>(
                 builder: (context, cart, ch) => Badge(
                       value: cart.itemCount.toString(),

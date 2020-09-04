@@ -26,13 +26,11 @@ class Cart with ChangeNotifier {
 
   double get totalAmount {
     var total = 0.0;
-    
+
     for (var a = 0; a < (items.length); a++) {
       total = total +
           (items.values.toList()[a].price * items.values.toList()[a].quantity);
-   
     }
-    
 
     return total;
   }
@@ -49,7 +47,12 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  void decrement(String productId,int endex) {
+  void deleteCartItem(String productId) {
+    _items.remove(productId);
+    notifyListeners();
+  }
+
+  void decrement(String productId, int endex) {
     _items.update(
         productId,
         (existingItem) => CartItem(
