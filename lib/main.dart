@@ -8,6 +8,8 @@ import './screens/product_detail_screen.dart';
 import './screens/product_overview_screen.dart';
 import './provider/products.dart';
 import './provider/cart.dart';
+import 'provider/order.dart';
+import 'screens/order_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -94,6 +96,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (context) => Products()),
         ChangeNotifierProvider(create: (context) => Cart()),
+        ChangeNotifierProvider(create: (context) => Order()),
       ],
       child: MaterialApp(
           theme: ThemeData(
@@ -103,6 +106,7 @@ class _MyAppState extends State<MyApp> {
           routes: {
             ProductOverviewScreen.routeName: (context) =>
                 ProductOverviewScreen(),
+            OrderScreen.routeName: (context) => OrderScreen(),
             ProductDetailScreen.namedroute: (context) => ProductDetailScreen()
           },
           home: child),

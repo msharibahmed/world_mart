@@ -25,6 +25,24 @@ class Cart with ChangeNotifier {
     return _items.length;
   }
 
+ 
+  // List<String> get itemNames {
+  //   var list = [];
+  //   _items.entries.forEach((element) {
+  //     list.add(element.value.title);
+  //   });
+  //   return list;
+  // }
+  
+  // List<int> get quantity {
+  //    var list = [];
+  //   // _items.entries.forEach((element) {
+  //   //   list.add(element.value.quantity);
+  //   // });
+  //   return list=[2,3];
+  // }
+  
+
   double get totalAmount {
     var total = 0.0;
 

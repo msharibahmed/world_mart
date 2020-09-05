@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:world_mart/screens/order_screen.dart';
 
 import '../provider/cart.dart';
 import '../widgets/cart_item.dart' as ci;
+import '../provider/order.dart';
 
 class CartBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartData = Provider.of<Cart>(context);
+    final orderData = Provider.of<Order>(context);
+
     return cartData.items.isEmpty
         ? Center(
             child: Text(
@@ -41,7 +45,8 @@ class CartBody extends StatelessWidget {
                         cartData.deleteCartItem(
                             cartData.items.keys.toList()[endex]);
 
-                        Scaffold.of(context).showSnackBar( cartData.snackBar('Removed From Favorites!'));
+                        Scaffold.of(context).showSnackBar(
+                            cartData.snackBar('Removed From Favorites!'));
                       },
                       child: ci.CartItem(endex),
                     );
@@ -78,7 +83,14 @@ class CartBody extends StatelessWidget {
                               )),
                         ),
                         FlatButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              orderData.addOrder(
+                                  totalAmount: cartData.totalAmount,
+                                  orderNames: cartData.items.values.toList());
+                              Navigator.pushReplacementNamed(
+                                  context, OrderScreen.routeName);
+                              cartData.clearCart();
+                            },
                             child: Text('Order Now',
                                 style: TextStyle(
                                     fontSize: 20,
