@@ -32,9 +32,11 @@ class _MyAppState extends State<MyApp> {
             elevation: 10,
             color: Colors.deepOrange,
             child: IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () => CustomDrawer.of(context).open(),
-            ),
+                icon: Icon(Icons.menu),
+                onPressed: () {
+                  CustomDrawer.of(context).open();
+
+                }),
           );
         },
       ),

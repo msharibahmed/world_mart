@@ -35,7 +35,7 @@ class Badge extends StatelessWidget {
             child: Text(
               value,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: TextStyle( color: Colors.black,
                 fontSize: 10,
               ),
             ),
