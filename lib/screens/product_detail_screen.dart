@@ -14,6 +14,11 @@ class ProductDetailScreen extends StatelessWidget {
     final products = Provider.of<Products>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
     final productsData = products.findById(productId);
+
+    void displaySnackBar(BuildContext ctx) {
+      Scaffold.of(ctx).showSnackBar(cart.snackBar('Added To Cart!'));
+    }
+
     return Scaffold(
       floatingActionButton: Builder(
           builder: (BuildContext ctx) => FloatingActionButton(
@@ -28,14 +33,4 @@ class ProductDetailScreen extends StatelessWidget {
       body: ProductDetail(productId),
     );
   }
-}
-
-displaySnackBar(BuildContext ctx) {
-  final snackBar = SnackBar(
-      duration: Duration(seconds: 1),
-      backgroundColor: Colors.deepOrange[100],
-      elevation: 10,
-      content: Text('Added To Cart!',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)));
-  Scaffold.of(ctx).showSnackBar(snackBar);
 }

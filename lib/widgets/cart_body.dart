@@ -41,14 +41,7 @@ class CartBody extends StatelessWidget {
                         cartData.deleteCartItem(
                             cartData.items.keys.toList()[endex]);
 
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                            duration: Duration(seconds: 1),
-                            backgroundColor: Colors.deepOrange[100],
-                            elevation: 10,
-                            content: Text('Removed From Cart!',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold))));
+                        Scaffold.of(context).showSnackBar( cartData.snackBar('Removed From Favorites!'));
                       },
                       child: ci.CartItem(endex),
                     );

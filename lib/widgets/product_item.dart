@@ -6,10 +6,6 @@ import '../provider/product.dart';
 import '../provider/cart.dart';
 
 class ProductItem extends StatelessWidget {
-  // final String imageUrl;
-  // final String title;
-  // final String id;
-  // ProductItem(this.id, this.title, this.imageUrl);
   @override
   Widget build(BuildContext context) {
     final productData = Provider.of<Product>(context, listen: false);
@@ -35,18 +31,10 @@ class ProductItem extends StatelessWidget {
                     ),
                     onPressed: () {
                       productData.onFavoriteTap();
-                      final snackBar = SnackBar(
-                          duration: Duration(seconds: 1),
-                          backgroundColor: Colors.deepOrange[100],
-                          elevation: 10,
-                          content: Text(
-                              productData.isFavorite
+                      
+                      Scaffold.of(context).showSnackBar(cart.snackBar( productData.isFavorite
                                   ? 'Added To Favorites!'
-                                  : 'Removed From Favorites!',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold)));
-                      Scaffold.of(context).showSnackBar(snackBar);
+                                  : 'Removed From Favorites!'));
                     })),
             backgroundColor: Colors.black87,
             title: Text(
@@ -62,15 +50,8 @@ class ProductItem extends StatelessWidget {
                   cart.addItem(productData.id, productData.title,
                       productData.price, productData.imageUrl);
                   print(cart.itemCount);
-                  final snackBar = SnackBar(
-                      duration: Duration(seconds: 1),
-                      backgroundColor: Colors.deepOrange[100],
-                      elevation: 10,
-                      content: Text('Added To Cart!',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold)));
-                  Scaffold.of(context).showSnackBar(snackBar);
+                  Scaffold.of(context).showSnackBar(
+                  cart.snackBar('Added To Cart!'));
                 }),
           )),
     );

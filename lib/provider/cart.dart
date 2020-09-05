@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CartItem {
   final String id;
@@ -70,6 +71,17 @@ class Cart with ChangeNotifier {
   void clearCart() {
     _items.clear();
     notifyListeners();
+  }
+
+  SnackBar snackBar(String message) {
+    final snackBar = SnackBar(
+        duration: Duration(seconds: 1),
+        backgroundColor: Colors.deepOrange[100],
+        elevation: 10,
+        content: Text(message,
+            style:
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold)));
+    return snackBar;
   }
 
   void addItem(String productId, String title, double price, String imageUrl) {
