@@ -16,10 +16,10 @@ class ProductItem extends StatelessWidget {
       child: GridTile(
           child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, ProductDetailScreen.namedroute,
+                Navigator.pushNamed(context, ProductDetailScreen.routeName,
                     arguments: productData.id);
               },
-              child: Image.network(productData.imageUrl, fit: BoxFit.cover)),
+              child: Image.network(productData.imageUrl, fit: BoxFit.contain)),
           footer: GridTileBar(
             leading: Consumer<Product>(
                 builder: (context, product, _) => IconButton(

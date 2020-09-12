@@ -44,28 +44,24 @@ class Products with ChangeNotifier {
     // }
     return [..._items];
   }
-   List<Product> get itemsFavOnly {
-     return _items.where((element) => element.isFavorite).toList();
-   
+
+  List<Product> get itemsFavOnly {
+    return _items.where((element) => element.isFavorite).toList();
   }
-
-
-  // void showFavoriteOnly() {
-  //   _showFavoriteOnly = true;
-  //   notifyListeners();
-  // }
-
-  // void showAll() {
-  //   _showFavoriteOnly = false;
-  //   notifyListeners();
-  // }
 
   Product findById(String productId) {
     return _items.firstWhere((element) => element.id == productId);
   }
 
-  void add() {
-    // item.add(value);
+  void addProduct(Product product) {
+    final newProduct = Product(
+        title: product.title,
+        id: DateTime.now().toString(),
+        imageUrl: product.imageUrl,
+        description: product.description,
+        price: product.price);
+    _items.add(newProduct);
+    print('executed');
     notifyListeners();
   }
 }

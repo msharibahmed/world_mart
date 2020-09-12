@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:world_mart/screens/cart_screen.dart';
+import 'package:world_mart/screens/edit_product_screen.dart';
 import 'package:world_mart/widgets/badge.dart';
 import 'package:world_mart/widgets/custom_drawer.dart';
 
@@ -9,6 +10,7 @@ import './screens/product_overview_screen.dart';
 import './provider/products.dart';
 import './provider/cart.dart';
 import 'provider/order.dart';
+import 'screens/manage_product_screen.dart';
 import 'screens/order_screen.dart';
 
 void main() {
@@ -35,7 +37,6 @@ class _MyAppState extends State<MyApp> {
                 icon: Icon(Icons.menu),
                 onPressed: () {
                   CustomDrawer.of(context).open();
-
                 }),
           );
         },
@@ -106,10 +107,11 @@ class _MyAppState extends State<MyApp> {
               accentColor: Colors.orange,
               fontFamily: 'Lato'),
           routes: {
-            ProductOverviewScreen.routeName: (context) =>
-                ProductOverviewScreen(),
+            ProductOverviewScreen.routeName: (context) => child,
+            ManageProductScreen.routeName: (context) => ManageProductScreen(),
             OrderScreen.routeName: (context) => OrderScreen(),
-            ProductDetailScreen.namedroute: (context) => ProductDetailScreen()
+            ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
+            EditProductScreen.routeName: (context) => EditProductScreen()
           },
           home: child),
     );

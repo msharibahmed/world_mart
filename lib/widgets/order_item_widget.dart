@@ -44,14 +44,17 @@ class OrderItemWidget extends StatelessWidget {
                     elevation: 10,
                     backgroundColor: Colors.green,
                     label: Text(
-                      '\$${order.items[index].totalAmount}',
+                      '\$${order.items[index].totalAmount.toStringAsFixed(2)}',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ))
               ],
             ),
             ExpansionTile(
-              title: Text('Product Details',style: TextStyle(color: Colors.black),),
+              title: Text(
+                'Product Details',
+                style: TextStyle(color: Colors.black),
+              ),
               children: [
                 ...(order.items[index].orderNames).toList().map((e) => Padding(
                       padding: const EdgeInsets.only(left: 5.0),
@@ -73,12 +76,18 @@ class OrderItemWidget extends StatelessWidget {
                                     )),
                                 Padding(
                                   padding: const EdgeInsets.all(10.0),
-                                  child: Text(e.title,style:TextStyle(fontSize: 25,fontWeight: FontWeight.w300)),
+                                  child: Text(e.title,
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w300)),
                                 ),
                                 Spacer(),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(e.quantity.toString() + 'x',style:TextStyle(fontSize: 15,fontWeight: FontWeight.bold)),
+                                  child: Text(e.quantity.toString() + 'x',
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold)),
                                 )
                               ],
                             )),
