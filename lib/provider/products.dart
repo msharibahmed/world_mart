@@ -64,4 +64,19 @@ class Products with ChangeNotifier {
     print('executed');
     notifyListeners();
   }
+
+  void updateProduct(Product product) {
+    var indexofProduct =
+        _items.indexWhere((element) => element.id == product.id);
+    _items[indexofProduct] = product;
+    print('product updated');
+    notifyListeners();
+  }
+
+  void deleteProduct(String id) {
+    var indexofProduct = _items.indexWhere((element) => element.id == id);
+    _items.removeAt(indexofProduct);
+    print('product deleted');
+    notifyListeners();
+  }
 }

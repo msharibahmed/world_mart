@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:world_mart/provider/products.dart';
 import 'package:world_mart/screens/edit_product_screen.dart';
 
 class ManageProductCard extends StatelessWidget {
+  final String id;
   final String imageUrl;
   final String title;
 
-  ManageProductCard(this.title, this.imageUrl);
+  ManageProductCard(this.id, this.title, this.imageUrl);
 
   @override
   Widget build(BuildContext context) {
+    final products = Provider.of<Products>(context);
     return Card(
-      margin: EdgeInsets.all(5),
+      margin: const EdgeInsets.all(5),
       elevation: 5,
       shadowColor: Colors.pink,
       child: ListTile(
         leading: CircleAvatar(
-          backgroundImage: NetworkImage(imageUrl ),
+          backgroundImage: NetworkImage(imageUrl),
         ),
         title: Text(title),
         trailing: Container(
@@ -25,10 +29,14 @@ class ManageProductCard extends StatelessWidget {
               IconButton(
                   icon: Icon(Icons.edit, color: Colors.green),
                   onPressed: () {
-                    Navigator.pushNamed(context, EditProductScreen.routeName);
+                    Navigator.pushNamed(context, EditProductScreen.routeName,
+                        arguments: id);
                   }),
               IconButton(
-                  icon: Icon(Icons.delete, color: Colors.red), onPressed: () {})
+                  icon: Icon(Icons.delete, color: Colors.red),
+                  onPressed: () {
+                    products.deleteProduct(id);
+                  })
             ],
           ),
         ),

@@ -47,7 +47,10 @@ class _ManageProductScreenState extends State<ManageProductScreen> {
         visible: v,
         child: FloatingActionButton.extended(
           onPressed: () {
-            Navigator.pushNamed(context, EditProductScreen.routeName);
+            Navigator.pushNamed(
+              context,
+              EditProductScreen.routeName,
+            );
           },
           label: Text('Add Product'),
           icon: Icon(
@@ -59,19 +62,20 @@ class _ManageProductScreenState extends State<ManageProductScreen> {
           isExtended: true,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(
-        title: Text('Manage Your Products'),
+        title: const Text('Manage Your Products'),
       ),
       body: ListView.builder(
         controller: ctrl,
         itemBuilder: (context, i) {
           return Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              ManageProductCard(data.items[i].title, data.items[i].imageUrl),
+              ManageProductCard(data.items[i].id, data.items[i].title,
+                  data.items[i].imageUrl),
             ],
           );
         },
