@@ -38,7 +38,9 @@ class _ManageProductScreenState extends State<ManageProductScreen> {
       });
     });
   }
-
+  Future<void> _refreshIndicator(BuildContext context) async {
+    await Provider.of<Products>(context,listen: false).fetchProducts();
+  }
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<Products>(context);
@@ -66,20 +68,22 @@ class _ManageProductScreenState extends State<ManageProductScreen> {
       appBar: AppBar(
         title: const Text('Manage Your Products'),
       ),
-      body: ListView.builder(
-        controller: ctrl,
-        itemBuilder: (context, i) {
-          return Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              ManageProductCard(data.items[i].id, data.items[i].title,
-                  data.items[i].imageUrl),
-            ],
-          );
-        },
-        itemCount: data.items.length,
+      body: RefreshIndicator(onRefresh: () => _refreshIndicator(context),
+              child: ListView.builder(
+          controller: ctrl,
+          itemBuilder: (context, i) {
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                ManageProductCard(data.items[i].id, data.items[i].title,
+                    data.items[i].imageUrl),
+              ],
+            );
+          },
+          itemCount: data.items.length,
+        ),
       ),
     );
   }

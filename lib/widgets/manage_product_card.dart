@@ -35,7 +35,21 @@ class ManageProductCard extends StatelessWidget {
               IconButton(
                   icon: Icon(Icons.delete, color: Colors.red),
                   onPressed: () {
-                    products.deleteProduct(id);
+                    products.deleteProduct(id).catchError((error) async{
+                   return await  showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                                title: Text('Error Message'),
+                                content: Text('Something went wrong'),
+                                actions: [
+                                  RaisedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Okay!')),
+                                ],
+                              ));
+                    });
                   })
             ],
           ),

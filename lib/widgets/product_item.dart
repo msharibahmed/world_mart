@@ -6,6 +6,8 @@ import '../provider/product.dart';
 import '../provider/cart.dart';
 
 class ProductItem extends StatelessWidget {
+  final Product prod;
+  ProductItem(this.prod);
   @override
   Widget build(BuildContext context) {
     final productData = Provider.of<Product>(context, listen: false);
@@ -30,11 +32,30 @@ class ProductItem extends StatelessWidget {
                       color: Colors.red,
                     ),
                     onPressed: () {
-                      productData.onFavoriteTap();
-                      
-                      Scaffold.of(context).showSnackBar(cart.snackBar( productData.isFavorite
+                      productData
+                          .onFavoriteTap(prod)
+                          .then((value) => Scaffold.of(context).showSnackBar(
+                              cart.snackBar(productData.isFavorite
                                   ? 'Added To Favorites!'
-                                  : 'Removed From Favorites!'));
+                                  : 'Removed From Favorites!')))
+                          .catchError((error) async {
+                        await showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                                  title: Text('Error Message'),
+                                  content: productData.isFavorite
+                                      ? Text('Could not unfavorite the product')
+                                      : Text('Could not favorite the product'),
+                                  actions: [
+                                    RaisedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Okay!'),
+                                    )
+                                  ],
+                                ));
+                      });
                     })),
             backgroundColor: Colors.black87,
             title: Text(
@@ -50,8 +71,8 @@ class ProductItem extends StatelessWidget {
                   cart.addItem(productData.id, productData.title,
                       productData.price, productData.imageUrl);
                   print(cart.itemCount);
-                  Scaffold.of(context).showSnackBar(
-                  cart.snackBar('Added To Cart!'));
+                  Scaffold.of(context)
+                      .showSnackBar(cart.snackBar('Added To Cart!'));
                 }),
           )),
     );

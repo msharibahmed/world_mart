@@ -1,42 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import 'product.dart';
 
 class Products with ChangeNotifier {
-  List<Product> _items = [
-    Product(
-      id: 'p1',
-      title: 'Red Shirt',
-      description: 'A red shirt - it is pretty red!',
-      price: 29.99,
-      imageUrl:
-          'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
-    ),
-    Product(
-      id: 'p2',
-      title: 'Trousers',
-      description: 'A nice pair of trousers.',
-      price: 59.99,
-      imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Trousers%2C_dress_%28AM_1960.022-8%29.jpg/512px-Trousers%2C_dress_%28AM_1960.022-8%29.jpg',
-    ),
-    Product(
-      id: 'p3',
-      title: 'Yellow Scarf',
-      description: 'Warm and cozy - exactly what you need for the winter.',
-      price: 19.99,
-      imageUrl:
-          'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
-    ),
-    Product(
-      id: 'p4',
-      title: 'A Pan',
-      description: 'Prepare any meal you want.',
-      price: 49.99,
-      imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
-    ),
-  ];
+  List<Product> _items = [];
+
+  Future<void> fetchProducts() async {
+    const url = 'https://world-cart-f1544.firebaseio.com/products.json';
+    try {
+      final response = await http.get(url);
+      final List<Product> tempData = [];
+      final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
+
+      extractedData.forEach((prodId, prodData) {
+        tempData.add(Product(
+            id: prodId,
+            imageUrl: prodData['imageUrl'],
+            title: prodData['title'],
+            isFavorite: prodData['isFavorite'],
+            description: prodData['description'],
+            price: prodData['price']));
+      });
+      _items = tempData;
+    } catch (error) {
+      print(error);
+      throw error;
+    }
+  }
 
   List<Product> get items {
     // if (_showFavoriteOnly) {
@@ -53,30 +45,68 @@ class Products with ChangeNotifier {
     return _items.firstWhere((element) => element.id == productId);
   }
 
-  void addProduct(Product product) {
-    final newProduct = Product(
-        title: product.title,
-        id: DateTime.now().toString(),
-        imageUrl: product.imageUrl,
-        description: product.description,
-        price: product.price);
-    _items.add(newProduct);
-    print('executed');
-    notifyListeners();
+  Future<void> addProduct(Product product) async {
+    const url = 'https://world-cart-f1544.firebaseio.com/products.json';
+
+    try {
+      final response = await http.post(url,
+          body: jsonEncode({
+            'title': product.title,
+            'description': product.description,
+            'imageUrl': product.imageUrl,
+            'price': product.price,
+            'isFavorite':false
+          }));
+      print(jsonDecode(response.body));
+      final newProduct = Product(
+          title: product.title,
+          id: jsonDecode(response.body)['name'],
+          imageUrl: product.imageUrl,
+          description: product.description,
+          price: product.price);
+      _items.add(newProduct);
+      print('executed');
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      throw error;
+    }
   }
 
-  void updateProduct(Product product) {
-    var indexofProduct =
-        _items.indexWhere((element) => element.id == product.id);
-    _items[indexofProduct] = product;
-    print('product updated');
-    notifyListeners();
+  Future<void> updateProduct(Product product) async {
+    final url =
+        'https://world-cart-f1544.firebaseio.com/products/${product.id}.json';
+
+    try {
+      await http.patch(url,
+          body: jsonEncode({
+            'title': product.title,
+            'description': product.description,
+            'imageUrl': product.imageUrl,
+            'price': product.price,
+          }));
+      var indexofProduct =
+          _items.indexWhere((element) => element.id == product.id);
+      _items[indexofProduct] = product;
+      print('product updated');
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      throw error;
+    }
   }
 
-  void deleteProduct(String id) {
-    var indexofProduct = _items.indexWhere((element) => element.id == id);
-    _items.removeAt(indexofProduct);
-    print('product deleted');
-    notifyListeners();
+  Future<void> deleteProduct(String id) async {
+    final url = 'https://world-cart-f1544.firebaseio.com/products/$id.json';
+    try {
+      await http.delete(url);
+      var indexofProduct = _items.indexWhere((element) => element.id == id);
+      _items.removeAt(indexofProduct);
+      print('product deleted');
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      throw error;
+    }
   }
 }
