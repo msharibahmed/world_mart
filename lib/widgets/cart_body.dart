@@ -39,6 +39,8 @@ class _CartBodyState extends State<CartBody> {
     });
   }
 
+  var _load = false;
+
   @override
   Widget build(BuildContext context) {
     final cartData = Provider.of<Cart>(context);
@@ -140,19 +142,31 @@ class _CartBodyState extends State<CartBody> {
                                 )),
                           ),
                           FlatButton(
-                              onPressed: () {
-                                orderData.addOrder(
-                                    totalAmount: cartData.totalAmount,
-                                    orderNames: cartData.items.values.toList());
-                                Navigator.pushReplacementNamed(
-                                    context, OrderScreen.routeName);
-                                cartData.clearCart();
+                              onPressed: () async {
+                                setState(() {
+                                  _load = true;
+                                });
+                                await orderData
+                                    .addOrder(
+                                        totalAmount: cartData.totalAmount,
+                                        orderNames:
+                                            cartData.items.values.toList())
+                                    .then((_) {
+                                       setState(() {
+                                  _load = false;
+                                });
+                                  Navigator.pushReplacementNamed(
+                                      context, OrderScreen.routeName);
+                                  cartData.clearCart();
+                                });
                               },
-                              child: Text('Order Now',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.deepOrangeAccent,
-                                      fontWeight: FontWeight.bold)))
+                              child: _load
+                                  ? CircularProgressIndicator()
+                                  : Text('Order Now',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.deepOrangeAccent,
+                                          fontWeight: FontWeight.bold)))
                         ],
                       ),
                     ),

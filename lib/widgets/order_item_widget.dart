@@ -3,9 +3,15 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:world_mart/provider/order.dart';
 
-class OrderItemWidget extends StatelessWidget {
+class OrderItemWidget extends StatefulWidget {
   final int index;
   OrderItemWidget(this.index);
+
+  @override
+  _OrderItemWidgetState createState() => _OrderItemWidgetState();
+}
+
+class _OrderItemWidgetState extends State<OrderItemWidget> {
   @override
   Widget build(BuildContext context) {
     final order = Provider.of<Order>(context);
@@ -23,12 +29,13 @@ class OrderItemWidget extends StatelessWidget {
               children: [
                 Container(
                   width: 200,
-                  child: Text('ORDER #' + order.items[index].orderId,
+                  child: Text('ORDER #' + order.items[widget.index].orderId,
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 ),
                 Text(
-                  DateFormat('dd MMM').format(order.items[index].orderTime),
+                  DateFormat('dd MMM')
+                      .format(order.items[widget.index].orderTime),
                   style: TextStyle(color: Colors.grey, fontSize: 17),
                 )
               ],
@@ -44,7 +51,7 @@ class OrderItemWidget extends StatelessWidget {
                     elevation: 10,
                     backgroundColor: Colors.green,
                     label: Text(
-                      '\$${order.items[index].totalAmount.toStringAsFixed(2)}',
+                      '\$${order.items[widget.index].totalAmount.toStringAsFixed(2)}',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ))
@@ -56,43 +63,45 @@ class OrderItemWidget extends StatelessWidget {
                 style: TextStyle(color: Colors.black),
               ),
               children: [
-                ...(order.items[index].orderNames).toList().map((e) => Padding(
-                      padding: const EdgeInsets.only(left: 5.0),
-                      child: Container(
-                        width: double.infinity,
-                        child: Card(
-                            elevation: 10,
-                            shadowColor: Colors.deepOrange,
-                            child: Row(
-                              children: [
-                                Container(
-                                    width: 50,
-                                    height: 50,
-                                    decoration:
-                                        BoxDecoration(shape: BoxShape.circle),
-                                    child: Image.network(
-                                      e.imageUrl,
-                                      fit: BoxFit.fill,
-                                    )),
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Text(e.title,
-                                      style: TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w300)),
-                                ),
-                                Spacer(),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(e.quantity.toString() + 'x',
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold)),
-                                )
-                              ],
-                            )),
-                      ),
-                    ))
+                ...(order.items[widget.index].orderNames)
+                    .toList()
+                    .map((e) => Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: Container(
+                            width: double.infinity,
+                            child: Card(
+                                elevation: 10,
+                                shadowColor: Colors.deepOrange,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle),
+                                        child: Image.network(
+                                          e.imageUrl,
+                                          fit: BoxFit.fill,
+                                        )),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Text(e.title,
+                                          style: TextStyle(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.w300)),
+                                    ),
+                                    Spacer(),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(e.quantity.toString() + 'x',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold)),
+                                    )
+                                  ],
+                                )),
+                          ),
+                        ))
               ],
             ),
           ],

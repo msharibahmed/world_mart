@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,6 @@ class Cart with ChangeNotifier {
     return _items.length;
   }
 
- 
   // List<String> get itemNames {
   //   var list = [];
   //   _items.entries.forEach((element) {
@@ -33,7 +33,7 @@ class Cart with ChangeNotifier {
   //   });
   //   return list;
   // }
-  
+
   // List<int> get quantity {
   //    var list = [];
   //   // _items.entries.forEach((element) {
@@ -41,7 +41,6 @@ class Cart with ChangeNotifier {
   //   // });
   //   return list=[2,3];
   // }
-  
 
   double get totalAmount {
     var total = 0.0;
@@ -102,7 +101,32 @@ class Cart with ChangeNotifier {
     return snackBar;
   }
 
-  void addItem(String productId, String title, double price, String imageUrl) {
+  Future<void> addItem(
+      String productId, String title, double price, String imageUrl) async {
+    // final url = 'https://world-cart-f1544.firebaseio.com/cart.json';
+
+    // final response = await http.get(url);
+    // final cartMap = jsonDecode(response.body) as Map<String, dynamic>;
+    // print(cartMap);
+
+  
+    //   cartMap.update(
+    //       productId,
+    //       (existingItem) => CartItem(
+    //           imageUrl: existingItem.imageUrl,
+    //           id: existingItem.id,
+    //           price: existingItem.price,
+    //           quantity: existingItem.quantity + 1,
+    //           title: existingItem.title));
+
+    // final newCart = CartItem(
+    //     id: jsonDecode(response.body),
+    //     price: price,
+    //     quantity: 1,
+    //     title: title,
+    //     imageUrl: imageUrl);
+    //     _items.addEntries(newEntries)
+
     if (_items.containsKey(productId)) {
       _items.update(
           productId,
