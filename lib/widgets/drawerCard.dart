@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:world_mart/provider/auth.dart';
 import 'custom_drawer.dart';
 
 class DrawerCard extends StatelessWidget {
@@ -9,14 +11,15 @@ class DrawerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final auth=Provider.of<Auth>(context,listen: false);
     return Card(
       elevation: 10,
       shadowColor: Colors.deepOrange,
       color: Colors.deepOrange[300],
       child: ListTile(
         onTap: () {
-          Navigator.pushNamed(context, onTapFunction);
           CustomDrawer.of(context).close();
+         name=='Log Out' ?auth.logout():Navigator.pushNamed(context, onTapFunction);
         },
         leading: Icon(
           iconName,

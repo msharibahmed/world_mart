@@ -18,12 +18,12 @@ class Product extends ChangeNotifier {
       @required this.description,
       this.isFavorite = false,
       @required this.price});
-  Future<void> onFavoriteTap(Product prod) async {
+  Future<void> onFavoriteTap(Product prod,String authToken,String userId ) async {
     final url =
-        'https://world-cart-f1544.firebaseio.com/products/${prod.id}.json';
+        'https://world-cart-f1544.firebaseio.com/userFavorite/$userId/${prod.id}.json?auth=$authToken';
     try {
       isFavorite = !isFavorite;
-      await http.patch(url, body: jsonEncode({'isFavorite': prod.isFavorite}));
+      await http.put(url, body: jsonEncode( prod.isFavorite));
 
       notifyListeners();
 
@@ -33,7 +33,7 @@ class Product extends ChangeNotifier {
       print('error aya');
 
       isFavorite = !isFavorite;
-      notifyListeners();
+      notifyListeners(); 
 
       print(isFavorite);
       throw error;

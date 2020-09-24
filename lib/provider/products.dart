@@ -5,10 +5,16 @@ import 'dart:convert';
 import 'product.dart';
 
 class Products with ChangeNotifier {
+  final String authToken;
   List<Product> _items = [];
+  final String userId;
+  Products(this.authToken, this._items, this.userId);
 
-  Future<void> fetchProducts() async {
-    const url = 'https://world-cart-f1544.firebaseio.com/products.json';
+  Future<void> fetchProducts([bool filterOption = false]) async {
+    final filterUrl =
+        filterOption ? 'orderBy="creatorId"&equalTo="$userId"' : '';
+    var url =
+        'https://world-cart-f1544.firebaseio.com/products.json?auth=$authToken&$filterUrl';
     try {
       final response = await http.get(url);
       final List<Product> tempData = [];
@@ -16,12 +22,17 @@ class Products with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
+      url =
+          'https://world-cart-f1544.firebaseio.com/userFavorite/$userId.json?auth=$authToken';
+      final favoriteResponse = jsonDecode((await http.get(url)).body);
       extractedData.forEach((prodId, prodData) {
         tempData.add(Product(
             id: prodId,
             imageUrl: prodData['imageUrl'],
             title: prodData['title'],
-            isFavorite: prodData['isFavorite'],
+            isFavorite: favoriteResponse == null
+                ? false
+                : favoriteResponse[prodId] ?? false,
             description: prodData['description'],
             price: prodData['price']));
       });
@@ -48,7 +59,8 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    const url = 'https://world-cart-f1544.firebaseio.com/products.json';
+    final url =
+        'https://world-cart-f1544.firebaseio.com/products.json?auth=$authToken';
 
     try {
       final response = await http.post(url,
@@ -57,7 +69,7 @@ class Products with ChangeNotifier {
             'description': product.description,
             'imageUrl': product.imageUrl,
             'price': product.price,
-            'isFavorite': false
+            'creatorId': userId
           }));
       print(jsonDecode(response.body));
       final newProduct = Product(
@@ -77,7 +89,7 @@ class Products with ChangeNotifier {
 
   Future<void> updateProduct(Product product) async {
     final url =
-        'https://world-cart-f1544.firebaseio.com/products/${product.id}.json';
+        'https://world-cart-f1544.firebaseio.com/products/${product.id}.json?auth=$authToken';
 
     try {
       await http.patch(url,
@@ -99,7 +111,8 @@ class Products with ChangeNotifier {
   }
 
   Future<void> deleteProduct(String id) async {
-    final url = 'https://world-cart-f1544.firebaseio.com/products/$id.json';
+    final url =
+        'https://world-cart-f1544.firebaseio.com/products/$id.json?auth=$authToken';
     try {
       await http.delete(url);
       var indexofProduct = _items.indexWhere((element) => element.id == id);

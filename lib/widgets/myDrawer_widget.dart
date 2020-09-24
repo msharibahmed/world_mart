@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:world_mart/screens/auth_screen.dart';
 
 import '../screens/manage_product_screen.dart';
 import '../screens/order_screen.dart';
@@ -26,8 +27,10 @@ class MyDrawer extends StatelessWidget {
                   'Shop', Icons.shop_two, ProductOverviewScreen.routeName),
               DrawerCard(
                   'Orders', Icons.shopping_basket, OrderScreen.routeName),
-              DrawerCard('Manage Product', Icons.shop, ManageProductScreen.routeName),
+              DrawerCard(
+                  'Manage Product', Icons.shop, ManageProductScreen.routeName),
               DrawerCard('Settings', Icons.settings, OrderScreen.routeName),
+              DrawerCard('Log Out', Icons.exit_to_app, AuthScreen.routeName),
             ],
           ),
         ),

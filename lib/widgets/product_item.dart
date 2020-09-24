@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:world_mart/provider/auth.dart';
 
 import '../screens/product_detail_screen.dart';
 import '../provider/product.dart';
@@ -10,6 +11,8 @@ class ProductItem extends StatelessWidget {
   ProductItem(this.prod);
   @override
   Widget build(BuildContext context) {
+        final authToken = Provider.of<Auth>(context, listen: false);
+
     final productData = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
 
@@ -33,7 +36,7 @@ class ProductItem extends StatelessWidget {
                     ),
                     onPressed: () {
                       productData
-                          .onFavoriteTap(prod)
+                          .onFavoriteTap(prod,authToken.token,authToken.userId)
                           .then((value) => Scaffold.of(context).showSnackBar(
                               cart.snackBar(productData.isFavorite
                                   ? 'Added To Favorites!'
