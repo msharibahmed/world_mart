@@ -88,7 +88,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   content: Text('Something went wrong, check your connection!'),
                   actions: [
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary:Colors.black,elevation: 5 ),
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.black, elevation: 5),
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -274,33 +275,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         ],
                         // https://flutter.dev/assets/homepage/carousel/phone_bezel-467ab8d838e5e2d2d3f347f766173ccc365220223692215416e4ce7342f2212f.png
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.deepOrangeAccent[100]),
-                              child: Text('Pick a default image',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              onPressed: () {
-                                _imageUrlController.text =
-                                    'https://logowik.com/content/uploads/images/flutter5786.jpg';
-                              }),
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.deepOrangeAccent[100]),
-                              child: Text('Image Preview',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              onPressed: () {
-                                _imageUrlController.text =
-                                    'https://logowik.com/content/uploads/images/flutter5786.jpg';
-                              }),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 15,
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.deepOrangeAccent[100]),
+                            child: Text('Pick a default image',
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            onPressed: () {
+                              _imageUrlController.text =
+                                  'https://logowik.com/content/uploads/images/flutter5786.jpg';
+                            }),
                       ),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
