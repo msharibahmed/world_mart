@@ -13,8 +13,10 @@ class Products with ChangeNotifier {
   Future<void> fetchProducts([bool filterOption = false]) async {
     final filterUrl =
         filterOption ? 'orderBy="creatorId"&equalTo="$userId"' : '';
-    var url =
+    var uri =
         'https://world-cart-f1544.firebaseio.com/products.json?auth=$authToken&$filterUrl';
+    final url = Uri.parse(uri);
+
     try {
       final response = await http.get(url);
       final List<Product> tempData = [];
@@ -22,9 +24,10 @@ class Products with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
-      url =
+      uri =
           'https://world-cart-f1544.firebaseio.com/userFavorite/$userId.json?auth=$authToken';
-      final favoriteResponse = jsonDecode((await http.get(url)).body);
+      final favoriteResponse =
+          jsonDecode((await http.get(Uri.parse(uri))).body);
       extractedData.forEach((prodId, prodData) {
         tempData.add(Product(
             id: prodId,
@@ -59,8 +62,9 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    final url =
+    final uri =
         'https://world-cart-f1544.firebaseio.com/products.json?auth=$authToken';
+    final url = Uri.parse(uri);
 
     try {
       final response = await http.post(url,
@@ -88,8 +92,9 @@ class Products with ChangeNotifier {
   }
 
   Future<void> updateProduct(Product product) async {
-    final url =
+    final uri =
         'https://world-cart-f1544.firebaseio.com/products/${product.id}.json?auth=$authToken';
+    final url = Uri.parse(uri);
 
     try {
       await http.patch(url,
@@ -111,8 +116,10 @@ class Products with ChangeNotifier {
   }
 
   Future<void> deleteProduct(String id) async {
-    final url =
+    final uri =
         'https://world-cart-f1544.firebaseio.com/products/$id.json?auth=$authToken';
+    final url = Uri.parse(uri);
+
     try {
       await http.delete(url);
       var indexofProduct = _items.indexWhere((element) => element.id == id);

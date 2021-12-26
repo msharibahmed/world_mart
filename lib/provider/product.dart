@@ -19,8 +19,10 @@ class Product extends ChangeNotifier {
       this.isFavorite = false,
       @required this.price});
   Future<void> onFavoriteTap(Product prod,String authToken,String userId ) async {
-    final url =
+    final uri =
         'https://world-cart-f1544.firebaseio.com/userFavorite/$userId/${prod.id}.json?auth=$authToken';
+    final url = Uri.parse(uri);
+
     try {
       isFavorite = !isFavorite;
       await http.put(url, body: jsonEncode( prod.isFavorite));
