@@ -71,13 +71,13 @@ class _CartBodyState extends State<CartBody> {
                                   title: Text('Are you sure?'),
                                   content: Text('Item will be deleted!'),
                                   actions: [
-                                    FlatButton(
+                                    TextButton(
                                       onPressed: () {
                                         Navigator.of(ctx).pop(true);
                                       },
                                       child: Text('Yes'),
                                     ),
-                                    FlatButton(
+                                    TextButton(
                                         onPressed: () {
                                           Navigator.of(ctx).pop(false);
                                         },
@@ -101,7 +101,7 @@ class _CartBodyState extends State<CartBody> {
                         cartData.deleteCartItem(
                             cartData.items.keys.toList()[endex]);
 
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                             cartData.snackBar('Removed From Favorites!'));
                       },
                       child: ci.CartItem(endex),
@@ -141,7 +141,7 @@ class _CartBodyState extends State<CartBody> {
                                       fontWeight: FontWeight.bold),
                                 )),
                           ),
-                          FlatButton(
+                          TextButton(
                               onPressed: () async {
                                 setState(() {
                                   _load = true;

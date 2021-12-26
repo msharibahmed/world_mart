@@ -113,10 +113,9 @@ class _MyAppState extends State<MyApp> {
       ],
       child: Consumer<Auth>(
         builder: (context, auth, _) => MaterialApp(
+          debugShowCheckedModeBanner: false,
             theme: ThemeData(
-                primarySwatch: Colors.deepOrange,
-                accentColor: Colors.orange,
-                fontFamily: 'Lato'),
+                fontFamily: 'Lato', colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.deepOrange).copyWith(secondary: Colors.orange)),
             routes: {
               ProductOverviewScreen.routeName: (context) => child,
               ManageProductScreen.routeName: (context) => ManageProductScreen(),

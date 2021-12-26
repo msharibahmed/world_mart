@@ -11,7 +11,7 @@ class ProductItem extends StatelessWidget {
   ProductItem(this.prod);
   @override
   Widget build(BuildContext context) {
-        final authToken = Provider.of<Auth>(context, listen: false);
+    final authToken = Provider.of<Auth>(context, listen: false);
 
     final productData = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
@@ -36,9 +36,10 @@ class ProductItem extends StatelessWidget {
                     ),
                     onPressed: () {
                       productData
-                          .onFavoriteTap(prod,authToken.token,authToken.userId)
-                          .then((value) => Scaffold.of(context).showSnackBar(
-                              cart.snackBar(productData.isFavorite
+                          .onFavoriteTap(
+                              prod, authToken.token, authToken.userId)
+                          .then((value) => ScaffoldMessenger.of(context)
+                              .showSnackBar(cart.snackBar(productData.isFavorite
                                   ? 'Added To Favorites!'
                                   : 'Removed From Favorites!')))
                           .catchError((error) async {
@@ -50,7 +51,7 @@ class ProductItem extends StatelessWidget {
                                       ? Text('Could not unfavorite the product')
                                       : Text('Could not favorite the product'),
                                   actions: [
-                                    RaisedButton(
+                                    ElevatedButton(
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
@@ -74,7 +75,7 @@ class ProductItem extends StatelessWidget {
                   cart.addItem(productData.id, productData.title,
                       productData.price, productData.imageUrl);
                   print(cart.itemCount);
-                  Scaffold.of(context)
+                  ScaffoldMessenger.of(context)
                       .showSnackBar(cart.snackBar('Added To Cart!'));
                 }),
           )),

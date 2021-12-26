@@ -16,7 +16,7 @@ class ProductDetailScreen extends StatelessWidget {
     final productsData = products.findById(productId);
 
     void displaySnackBar(BuildContext ctx) {
-      Scaffold.of(ctx).showSnackBar(cart.snackBar('Added To Cart!'));
+      ScaffoldMessenger.of(ctx).showSnackBar(cart.snackBar('Added To Cart!'));
     }
 
     return Scaffold(

@@ -16,7 +16,7 @@ class CartScreen extends StatelessWidget {
               elevation: 20,
               color: Colors.deepOrange,
               child: Consumer<Cart>(
-                builder: (context, cart, _) => FlatButton(
+                builder: (context, cart, _) => TextButton(
                     onPressed: cart.clearCart,
                     child: Text('Clear Cart',
                         style: TextStyle(fontSize: 20, color: Colors.white))),

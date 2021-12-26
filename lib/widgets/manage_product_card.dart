@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
@@ -61,7 +60,7 @@ class _ManageProductCardState extends State<ManageProductCard> {
                                           title: Text('Error Message'),
                                           content: Text('Something went wrong'),
                                           actions: [
-                                            RaisedButton(
+                                            ElevatedButton(
                                                 onPressed: () {
                                                   Navigator.pop(context);
                                                 },

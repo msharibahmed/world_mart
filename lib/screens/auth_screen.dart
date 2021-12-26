@@ -112,7 +112,14 @@ class _AuthCardState extends State<AuthCard> {
                 'Error Occurred!',
               ),
               content: Text(message),
-              actions: [FlatButton(onPressed: ()=>Navigator.pop(ctx), child: Text('OKAY',style: TextStyle(color: Colors.blue,)))],
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(ctx),
+                    child: Text('OKAY',
+                        style: TextStyle(
+                          color: Colors.blue,
+                        )))
+              ],
             ));
   }
 
@@ -242,17 +249,21 @@ class _AuthCardState extends State<AuthCard> {
                 if (_isLoading)
                   CircularProgressIndicator()
                 else
-                  RaisedButton(
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+                      primary: Theme.of(context).primaryColor,
+                      textStyle: TextStyle(
+                        color: Theme.of(context).primaryTextTheme.button.color,
+                      ),
+                    ),
                     child:
                         Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
                     onPressed: _submit,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                    color: Theme.of(context).primaryColor,
-                    textColor: Theme.of(context).primaryTextTheme.button.color,
                   ),
                 FlatButton(
                   child: Text(
