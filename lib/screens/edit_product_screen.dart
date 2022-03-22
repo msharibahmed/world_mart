@@ -66,7 +66,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   var _isLoading = false;
-  Future<void> _saveForm() async {
+  Future<void> _saveForm() async { 
     final bool valBool = _formKey.currentState.validate();
     if (!valBool) {
       return;

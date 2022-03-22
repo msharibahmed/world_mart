@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:world_mart/screens/lru_cache_screen.dart';
 
 import 'product_item.dart';
 import '../provider/products.dart';
@@ -32,7 +33,7 @@ class _ProductsGridState extends State<ProductsGrid> {
     if (_boolCheck == true) {
       Provider.of<Products>(context).fetchProducts().then((_) {
         setState(() {
-           loadng = false;
+          loadng = false;
         });
       });
     }
@@ -44,19 +45,28 @@ class _ProductsGridState extends State<ProductsGrid> {
     final productsData = Provider.of<Products>(context);
     final products =
         widget.showFav ? productsData.itemsFavOnly : productsData.items;
-    return loadng ?Align(child: CircularProgressIndicator()):GridView.builder(
-        padding: const EdgeInsets.all(16.0),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10.0,
-            crossAxisSpacing: 10.0,
-            childAspectRatio: 3 / 2),
-        itemCount: products.length,
-        itemBuilder: (context, i) {
-          return ChangeNotifierProvider.value(
-            value: products[i],
-            child: ProductItem(productsData.items[i]),
+    return loadng
+        ? Align(child: CircularProgressIndicator())
+        : Column(
+            children: [
+              Flexible(child: LRUCacheScreen()),
+              Expanded(
+                child: GridView.builder(
+                    padding: const EdgeInsets.all(16.0),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 10.0,
+                        crossAxisSpacing: 10.0,
+                        childAspectRatio: 3 / 2),
+                    itemCount: products.length,
+                    itemBuilder: (context, i) {
+                      return ChangeNotifierProvider.value(
+                        value: products[i],
+                        child: ProductItem(productsData.items[i]),
+                      );
+                    }),
+              )
+            ],
           );
-        });
   }
 }

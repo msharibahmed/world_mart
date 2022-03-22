@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'major_project_products.dart';
 import 'product.dart';
 
 class Products with ChangeNotifier {
@@ -39,7 +40,7 @@ class Products with ChangeNotifier {
             description: prodData['description'],
             price: prodData['price']));
       });
-      _items = tempData;
+      _items.addAll(tempData);
     } catch (error) {
       print(error);
       throw error;
@@ -130,5 +131,27 @@ class Products with ChangeNotifier {
       print(error);
       throw error;
     }
+  }
+
+  
+  List<Product> getProducts() {
+    return [..._items];
+  }
+
+  Lru recentProducts = Lru(3);
+  //initializing lru cache with length 3
+
+  void addRecent(String id) {
+    recentProducts.use(id);
+    print(id);
+    notifyListeners();
+  }
+
+  Product getByid(String id) {
+    return _items.firstWhere((element) => element.id == id);
+  }
+
+  List<String> getOurRecent() {
+    return recentProducts.getAll();
   }
 }

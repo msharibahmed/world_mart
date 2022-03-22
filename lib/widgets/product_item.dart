@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:world_mart/provider/auth.dart';
+import 'package:world_mart/provider/major_project_products.dart';
+import 'package:world_mart/provider/products.dart';
 
 import '../screens/product_detail_screen.dart';
 import '../provider/product.dart';
@@ -23,6 +25,9 @@ class ProductItem extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, ProductDetailScreen.routeName,
                     arguments: productData.id);
+
+                Provider.of<Products>(context, listen: false)
+                    .addRecent(productData.id);
               },
               child: Image.network(productData.imageUrl, fit: BoxFit.contain)),
           footer: GridTileBar(
