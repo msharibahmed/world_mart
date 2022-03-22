@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:world_mart/provider/major_project_products.dart';
 import 'package:world_mart/screens/cart_screen.dart';
+import 'package:world_mart/screens/developers_screen.dart';
 import 'package:world_mart/screens/edit_product_screen.dart';
 import 'package:world_mart/screens/splash_screen.dart';
 import 'package:world_mart/widgets/badge.dart';
@@ -123,13 +124,14 @@ class _MyAppState extends State<MyApp> {
                     ColorScheme.fromSwatch(primarySwatch: Colors.deepOrange)
                         .copyWith(secondary: Colors.orange)),
             routes: {
-              ProductOverviewScreen.routeName: (context) => child,
-              ManageProductScreen.routeName: (context) => ManageProductScreen(),
-              AuthScreen.routeName: (context) => AuthScreen(),
-              OrderScreen.routeName: (context) => OrderScreen(),
-              ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
-              EditProductScreen.routeName: (context) => EditProductScreen(),
-              LRUCacheScreen.routeName: (ctx) => LRUCacheScreen(),
+              ProductOverviewScreen.routeName: (_) => child,
+              ManageProductScreen.routeName: (_) => ManageProductScreen(),
+              AuthScreen.routeName: (_) => AuthScreen(),
+              OrderScreen.routeName: (_) => OrderScreen(),
+              ProductDetailScreen.routeName: (_) => ProductDetailScreen(),
+              EditProductScreen.routeName: (_) => EditProductScreen(),
+              LRUCacheScreen.routeName: (_) => LRUCacheScreen(),
+              DeveloperScreen.routeName: (_) => DeveloperScreen(),
             },
             // home: child
             home: auth.isAuth
