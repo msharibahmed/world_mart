@@ -8,28 +8,31 @@ class ManageProductCard extends StatefulWidget {
   final String id;
   final String imageUrl;
   final String title;
+  final bool isSearch;
 
-  ManageProductCard(this.id, this.title, this.imageUrl);
+  ManageProductCard(this.id, this.title, this.imageUrl,
+      [this.isSearch = false]);
 
   @override
   _ManageProductCardState createState() => _ManageProductCardState();
 }
 
 class _ManageProductCardState extends State<ManageProductCard> {
- 
   @override
   Widget build(BuildContext context) {
     final products = Provider.of<Products>(context);
     return Card(
-            margin: const EdgeInsets.all(5),
-            elevation: 5,
-            shadowColor: Colors.pink,
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(widget.imageUrl),
-              ),
-              title: Text(widget.title),
-              trailing: Container(
+      margin: const EdgeInsets.all(5),
+      elevation: 5,
+      shadowColor: Colors.pink,
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundImage: NetworkImage(widget.imageUrl),
+        ),
+        title: Text(widget.title),
+        trailing: widget.isSearch
+            ? Container()
+            : Container(
                 width: 100,
                 child: Row(
                   children: [
@@ -72,7 +75,7 @@ class _ManageProductCardState extends State<ManageProductCard> {
                   ],
                 ),
               ),
-            ),
-          );
+      ),
+    );
   }
 }
