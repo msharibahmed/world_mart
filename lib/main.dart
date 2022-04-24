@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:world_mart/provider/major_project_products.dart';
 import 'package:world_mart/screens/cart_screen.dart';
@@ -20,6 +21,8 @@ import 'screens/manage_product_screen.dart';
 import 'screens/order_screen.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   runApp(MyApp());
 }
 

@@ -10,6 +10,22 @@ class Products with ChangeNotifier {
   List<Product> _items = [];
   final String userId;
   Products(this.authToken, this._items, this.userId);
+  List<String> get generateProductNameList {
+    List<String> _nameList = [];
+    _items.forEach((element) {
+      _nameList.add(element.title);
+    });
+    return _nameList;
+  }
+
+  void sortProductsByPrice(String sortBy) {
+    _items.sort(((a, b) {
+      return sortBy == "ascending"
+          ? a.price.compareTo(b.price)
+          : b.price.compareTo(a.price);
+    }));
+    notifyListeners();
+  }
 
   Future<void> fetchProducts([bool filterOption = false]) async {
     final filterUrl =
@@ -133,7 +149,6 @@ class Products with ChangeNotifier {
     }
   }
 
-  
   List<Product> getProducts() {
     return [..._items];
   }

@@ -60,9 +60,36 @@ class _ManageProductScreenState extends State<ManageProductScreen> {
     await Provider.of<Products>(context, listen: false).fetchProducts(true);
   }
 
+  var myMenuItems = <String>[
+    'sort by:',
+    'price- low to high',
+    'price- high to low',
+  ];
+
+  void onSelect(item) {
+    var _prov = Provider.of<Products>(context,listen: false);
+    switch (item) {
+      case 'sort by:':
+        print('sort by: clicked');
+        break;
+      case 'price- low to high':
+        {
+          _prov.sortProductsByPrice("ascending");
+          print('price- low to high clicked');
+        }
+        break;
+      case 'price- high to low':
+        {
+          _prov.sortProductsByPrice("descending");
+          print('price- high to low clicked');
+        }
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('rebuldng....');
+    print('rebuildng....');
     return Scaffold(
       floatingActionButton: Visibility(
         visible: v,
@@ -86,6 +113,18 @@ class _ManageProductScreenState extends State<ManageProductScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(
         title: const Text('Manage Your Products'),
+        actions: <Widget>[
+          PopupMenuButton<String>(
+              onSelected: onSelect,
+              itemBuilder: (BuildContext context) {
+                return myMenuItems.map((String choice) {
+                  return PopupMenuItem<String>(
+                    child: Text(choice),
+                    value: choice,
+                  );
+                }).toList();
+              })
+        ],
       ),
       body: _boolCheck2
           ? Center(child: CircularProgressIndicator())
@@ -101,7 +140,7 @@ class _ManageProductScreenState extends State<ManageProductScreen> {
                           height: 10,
                         ),
                         ManageProductCard(data.items[i].id, data.items[i].title,
-                            data.items[i].imageUrl),
+                            data.items[i].imageUrl, data.items[i].price),
                       ],
                     );
                   },
