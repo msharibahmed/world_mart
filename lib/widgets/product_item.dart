@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:world_mart/provider/auth.dart';
-import 'package:world_mart/provider/major_project_products.dart';
 import 'package:world_mart/provider/products.dart';
 
 import '../screens/product_detail_screen.dart';

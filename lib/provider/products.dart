@@ -8,6 +8,7 @@ import 'product.dart';
 class Products with ChangeNotifier {
   final String authToken;
   List<Product> _items = [];
+  List<Product> _searchItems = [];
   final String userId;
   Products(this.authToken, this._items, this.userId);
   List<String> get generateProductNameList {
@@ -68,6 +69,25 @@ class Products with ChangeNotifier {
     //   return _items.where((element) => element.isFavorite).toList();
     // }
     return [..._items];
+  }
+
+  List<Product> get searchItems {
+    return [..._searchItems];
+  }
+
+  
+
+  void showProductsBySearch(String input) {
+    print(input);
+    if (input.trim() == '') {
+    _searchItems.clear();
+    } else {
+      _searchItems = _items.where((element) {
+        var b = element.title.toLowerCase().startsWith(input.toLowerCase());
+        return b;
+      }).toList();
+    }
+    notifyListeners();
   }
 
   List<Product> get itemsFavOnly {
@@ -141,6 +161,7 @@ class Products with ChangeNotifier {
       await http.delete(url);
       var indexofProduct = _items.indexWhere((element) => element.id == id);
       _items.removeAt(indexofProduct);
+
       print('product deleted');
       notifyListeners();
     } catch (error) {
