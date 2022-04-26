@@ -7,6 +7,8 @@ class DeveloperScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("Sharib, Shresth, Harshit"),),);
+    return Scaffold(
+      appBar: AppBar(title: Text("Developers"),)
+      ,body: Center(child: Text("Sharib, Shresth, Harshit"),),);
   }
 }

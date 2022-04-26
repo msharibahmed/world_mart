@@ -6,6 +6,7 @@ import 'package:world_mart/screens/cart_screen.dart';
 import 'package:world_mart/screens/developers_screen.dart';
 import 'package:world_mart/screens/edit_product_screen.dart';
 import 'package:world_mart/screens/splash_screen.dart';
+import 'package:world_mart/screens/tsp_screen.dart';
 import 'package:world_mart/widgets/badge.dart';
 import 'package:world_mart/widgets/custom_drawer.dart';
 
@@ -135,6 +136,7 @@ class _MyAppState extends State<MyApp> {
               EditProductScreen.routeName: (_) => EditProductScreen(),
               LRUCacheScreen.routeName: (_) => LRUCacheScreen(),
               DeveloperScreen.routeName: (_) => DeveloperScreen(),
+              TspScreen.routeName: (_) => TspScreen(),
             },
             // home: child
             home: auth.isAuth

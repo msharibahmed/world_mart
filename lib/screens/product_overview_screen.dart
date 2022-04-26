@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:world_mart/provider/products.dart';
-import 'package:world_mart/widgets/manage_product_card.dart';
 import 'package:world_mart/widgets/search_list_item.dart';
 import '../widgets/products_grid.dart';
 

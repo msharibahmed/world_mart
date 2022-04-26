@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:world_mart/screens/auth_screen.dart';
+import 'package:world_mart/screens/tsp_screen.dart';
 
 import '../screens/developers_screen.dart';
 import '../screens/manage_product_screen.dart';
@@ -31,6 +32,7 @@ class MyDrawer extends StatelessWidget {
               DrawerCard(
                   'Manage Product', Icons.shop, ManageProductScreen.routeName),
               DrawerCard('Developers', Icons.settings, DeveloperScreen.routeName),
+              DrawerCard('TSP implemnetation', Icons.route_outlined, TspScreen.routeName),
               DrawerCard('Log Out', Icons.exit_to_app, AuthScreen.routeName),
             ],
           ),

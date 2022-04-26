@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'product.dart';
-
 class Dll {
   String id;
   Dll next;
