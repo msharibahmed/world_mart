@@ -67,7 +67,7 @@ class _ManageProductScreenState extends State<ManageProductScreen> {
   ];
 
   void onSelect(item) {
-    var _prov = Provider.of<Products>(context,listen: false);
+    var _prov = Provider.of<Products>(context, listen: false);
     switch (item) {
       case 'sort by:':
         print('sort by: clicked');
@@ -140,7 +140,7 @@ class _ManageProductScreenState extends State<ManageProductScreen> {
                           height: 10,
                         ),
                         ManageProductCard(data.items[i].id, data.items[i].title,
-                            data.items[i].imageUrl, data.items[i].price,),
+                            data.items[i].imageUrl),
                       ],
                     );
                   },
