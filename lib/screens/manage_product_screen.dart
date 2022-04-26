@@ -140,7 +140,7 @@ class _ManageProductScreenState extends State<ManageProductScreen> {
                           height: 10,
                         ),
                         ManageProductCard(data.items[i].id, data.items[i].title,
-                            data.items[i].imageUrl, data.items[i].price),
+                            data.items[i].imageUrl, data.items[i].price,),
                       ],
                     );
                   },
